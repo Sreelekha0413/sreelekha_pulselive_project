@@ -49,8 +49,24 @@ public class LeagueTableTest {
 		assertEquals(-5, leagueTableentries.get(2).getGoalDifference());
 		assertEquals(0, leagueTableentries.get(2).getPoints());
 		
+	}
+	@Test
+	public void TestLeagueTable_compareEntriesByPoints() {
+		List<Match> matches = new ArrayList<Match>();
+		matches.add(new Match("Tottenham Hotspur","Leeds United",2,3));
+		matches.add(new Match("Everton F.C","Tottenham Hotspur",1,3));
+		matches.add(new Match("Chelsea","Tottenham Hotspur",2,2));
+		matches.add(new Match("Everton F.C","Leeds United",2,1));
+		matches.add(new Match("Chelsea","Everton F.C",3,2));
+		matches.add(new Match("Leeds United","Chelsea",4,2));
 		
+		List<LeagueTableEntry> leagueTableEntries = new LeagueTable(matches).getTableEntries();
+		assertEquals("Leeds United", leagueTableEntries.get(0).getTeamName());
+		assertEquals("Tottenham Hotspur", leagueTableEntries.get(1).getTeamName());
+		assertEquals("Chelsea", leagueTableEntries.get(2).getTeamName());
+		assertEquals("Everton F.C", leagueTableEntries.get(3).getTeamName());
 		
 	}
+	
 
 }
