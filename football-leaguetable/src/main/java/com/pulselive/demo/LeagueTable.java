@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pulselive.demo.model.LeagueTableEntry;
 import com.pulselive.demo.model.Match;
+import com.pulselive.demo.service.LeagueTableService;
 
 /*The League class will accept the matches 
  * and will populate sorted leagueTable*/
@@ -25,8 +26,13 @@ public class LeagueTable {
     
    
     public List<LeagueTableEntry> getTableEntries() {
-    	List<LeagueTableEntry> leagueTable = null;
+    	LeagueTableService leagueTableService = new LeagueTableService();
+    	List<LeagueTableEntry> leagueTable = leagueTableService.getLeagueTableEntries(getMatches());
     	return leagueTable;
 
+    }
+    
+    public List<Match> getMatches(){
+    	return this.matches;
     }
 }
