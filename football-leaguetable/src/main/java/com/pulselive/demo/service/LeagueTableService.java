@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.RuntimeErrorException;
+
 import com.pulselive.demo.model.LeagueTableEntry;
 import com.pulselive.demo.model.Match;
 
@@ -32,6 +34,9 @@ public class LeagueTableService {
 		matches.forEach(match-> {
 			getTeamNames(table,match);
 		});
+		System.out.println("all teams" + table.values());
+		
+		System.out.println("----------------------------");
 		
 		matches.forEach(match -> {
 			caluclateNoOfMatchPlayed(table,match);
@@ -104,8 +109,12 @@ public class LeagueTableService {
 	}
 	private void getTeamNames(Map<String, LeagueTableEntry> table, Match match) {
 		// TODO Auto-generated method stub
+		if(match.getHomeTeam().isEmpty() || match.getAwayTeam().isEmpty() || match.getHomeTeam().equalsIgnoreCase(match.getAwayTeam())) 
+		{
+			throw new RuntimeException("HomeTeam or AwayTeam cannot be null and cannot be same");
+		}
 		table.putIfAbsent(match.getHomeTeam(), new LeagueTableEntry(match.getHomeTeam(), 0, 0, 0, 0, 0, 0, 0, 0));
-		table.putIfAbsent(match.getHomeTeam(), new LeagueTableEntry(match.getAwayTeam(), 0, 0, 0, 0, 0, 0, 0, 0));
+		table.putIfAbsent(match.getAwayTeam(), new LeagueTableEntry(match.getAwayTeam(), 0, 0, 0, 0, 0, 0, 0, 0));
 		
 	}
 	

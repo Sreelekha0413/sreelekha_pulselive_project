@@ -65,8 +65,56 @@ public class LeagueTableTest {
 		assertEquals("Tottenham Hotspur", leagueTableEntries.get(1).getTeamName());
 		assertEquals("Chelsea", leagueTableEntries.get(2).getTeamName());
 		assertEquals("Everton F.C", leagueTableEntries.get(3).getTeamName());
+	}
+	@Test
+	public void TestLeagueTable_compareEntriesByGoalDiff() {
+		List<Match> matches = new ArrayList<Match>();
+		matches.add(new Match("Arsenal","Chelsea",3,2));
+		matches.add(new Match("Chelsea","Tottenham Hotspur",3,1));
+		matches.add(new Match("Tottenham Hotspur","Arsenal",2,0));
 		
+		List<LeagueTableEntry> leagueTableEntries = new LeagueTable(matches).getTableEntries();
+		assertEquals("Chelsea", leagueTableEntries.get(0).getTeamName());
+		assertEquals("Tottenham Hotspur", leagueTableEntries.get(1).getTeamName());
+		assertEquals("Arsenal", leagueTableEntries.get(2).getTeamName());
+	}
+	@Test
+	public void TestLeagueTable_compareEntriesByGoalFor() {
+		List<Match> matches = new ArrayList<Match>();
+		matches.add(new Match("Everton F.C","Chelsea",3,2));
+		matches.add(new Match("Chelsea","Tottenham Hotspur",3,1));
+		
+		
+		List<LeagueTableEntry> leagueTableEntries = new LeagueTable(matches).getTableEntries();
+		assertEquals("Chelsea", leagueTableEntries.get(0).getTeamName());
+		assertEquals("Everton F.C", leagueTableEntries.get(1).getTeamName());
+		assertEquals("Tottenham Hotspur", leagueTableEntries.get(2).getTeamName());
 	}
 	
+	@Test
+	public void TestLeagueTable_compareEntriesByTeamName() {
+		List<Match> matches = new ArrayList<Match>();
+		matches.add(new Match("Arsenal","Chelsea",2,2));
+		matches.add(new Match("Chelsea","Tottenham Hotspur",1,1));
+		matches.add(new Match("Tottenham Hotspur","Arsenal",3,3));
+		
+		List<LeagueTableEntry> leagueTableEntries = new LeagueTable(matches).getTableEntries();
+		assertEquals("Arsenal", leagueTableEntries.get(0).getTeamName());
+		assertEquals("Tottenham Hotspur", leagueTableEntries.get(1).getTeamName());
+		assertEquals("Chelsea", leagueTableEntries.get(2).getTeamName());
+		
+	}
+	@Test
+	public void TestLeagueTable_checkExceptionForSameTeams() {
+		List<Match> matches = new ArrayList<Match>();
+		matches.add(new Match("Arsenal","Arsenal",2,2));
+		try {
+		List<LeagueTableEntry> leagueTableEntries = new LeagueTable(matches).getTableEntries();
+		}catch(RuntimeException e) {
+			assertEquals("HomeTeam or AwayTeam cannot be null and cannot be same", e.getMessage());
+		}
+		
+		
+	}
 
 }
